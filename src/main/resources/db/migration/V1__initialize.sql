@@ -1,38 +1,37 @@
 drop table if exists products cascade;
-create table products (id bigserial, title varchar(255), description varchar(5000), price int, primary key(id));
+create table products (id bigserial, title varchar(255), description varchar(5000), price int, categories_id bigint, primary key(id));
 insert into products
-(title, description, price) values
-('Cheese', 'Fresh cheese', 320),
-('Milk', 'Fresh milk', 80),
-('Apples', 'Fresh apples', 80),
-('Bread', 'Fresh bread', 30),
-('A1', '', 1),
-('A2', '', 2),
-('A3', '', 3),
-('A4', '', 4),
-('A5', '', 5),
-('A6', '', 6),
-('A7', '', 7),
-('A8', '', 8),
-('A9', '', 9),
-('A10', '', 10),
-('A22', '', 11),
-('A23', '', 12),
-('A24', '', 13),
-('A25', '', 14),
-('A26', '', 15),
-('A27', '', 16),
-('A28', '', 17),
-('A29', '', 18),
-('A30', '', 19),
-('A33', '', 10),
-('A31', '', 11),
-('A44', '', 12),
-('A55', '', 13),
-('A66', '', 14),
-('A77', '', 15),
-('A88', '', 16),
-('A99', '', 17),
-('A100', '', 18),
-('A190', '', 19),
-('A20', '', 20);
+(title, description, price, categories_id) values
+('Cheese', 'Fresh cheese', 320, 1),
+('Milk', 'Fresh milk', 80, 1),
+('Apples', 'Fresh apples', 8, 1),
+('Bread', 'Fresh bread', 30, 1),
+('Lentil', 'Fresh', 35,1),
+('Sweater', '', 200,1),
+('Robe', '', 34,2),
+('Coat', '', 567, 2),
+('Accessories', '', 15,2),
+('Microphone', '', 62,3),
+('Control', '', 17,3),
+('Shorts', '', 823, 2),
+('Fuse', '', 9, 3),
+('Speaker', '', 99,3),
+('Celery', '', 112,1),
+('Blouse', '', 142,2),
+('Radish', '', 234,1),
+('Casette', '', 14,3),
+('Television', '', 1500,3),
+('CD', '', 55,3),
+('Garlic', '', 222,1),
+('Chickpea', '', 145,1),
+('Bikini', '', 107,2),
+('Cap', '', 106,2),
+('Sorrel', '', 456,1),
+('Panties', '', 2224,2),
+('Radio', '', 220,3);
+
+drop table if exists categories cascade;
+create table categories (id bigserial, name varchar(255), primary key(id));
+insert into categories
+(name) values
+('product'), ('clothes'), ('device');

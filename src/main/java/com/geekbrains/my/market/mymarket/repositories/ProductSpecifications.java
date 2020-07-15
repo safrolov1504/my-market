@@ -15,20 +15,14 @@ public class ProductSpecifications {
     }
 
     public static Specification<Product> PriceLEThan(double maxPrice) {
-        return new Specification<Product>() {
-            @Override
-            public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-                return criteriaBuilder.lessThanOrEqualTo(root.get("price"), maxPrice);
-            }
-        };
+        return (Specification<Product>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("price"), maxPrice);
     }
 
     public static Specification<Product> NameLike(String nameLike) {
-        return new Specification<Product>() {
-            @Override
-            public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-                return criteriaBuilder.like(root.get("title"), nameLike+"%");
-            }
-        };
+        return (Specification<Product>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(root.get("title"), "%"+nameLike+"%");
+    }
+
+    public static Specification<Product> CategoryLike(Long categoryLike) {
+        return (Specification<Product>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("category"), categoryLike);
     }
 }

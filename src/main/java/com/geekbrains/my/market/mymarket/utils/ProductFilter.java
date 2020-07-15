@@ -1,11 +1,13 @@
 package com.geekbrains.my.market.mymarket.utils;
 
 
+import com.geekbrains.my.market.mymarket.model.Category;
 import com.geekbrains.my.market.mymarket.model.Product;
 import com.geekbrains.my.market.mymarket.repositories.ProductSpecifications;
 import lombok.Getter;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.util.List;
 import java.util.Map;
 
 @Getter
@@ -13,7 +15,7 @@ public class ProductFilter {
     private Specification<Product> spec;
     private StringBuilder filterDefinition;
 
-    public ProductFilter(Map<String, String> map) {
+    public ProductFilter(Map<String, String> map, List<Category> categories) {
         this.spec = Specification.where(null);
         this.filterDefinition = new StringBuilder();
         if (map.containsKey("min_price") && !map.get("min_price").isEmpty()) {
@@ -31,13 +33,13 @@ public class ProductFilter {
             spec = spec.and(ProductSpecifications.NameLike(nameLike));
             filterDefinition.append("&title_search=").append(nameLike);
         }
-    }
-
-    public Specification<Product> getSpec() {
-        return spec;
-    }
-
-    public StringBuilder getFilterDefinition() {
-        return filterDefinition;
+        Specification<Product> categ = Specification.where(null);
+        for (Category category: categories) {
+            if(map.containsKey(category.getName()) && !map.get(category.getName()).isEmpty()){
+                categ = categ.or(ProductSpecifications.CategoryLike(category.getId()));
+                filterDefinition.append("&").append(category.getName()).append("=on");
+            }
+        }
+        spec = spec.and(categ);
     }
 }

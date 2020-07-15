@@ -25,10 +25,15 @@ public class Product {
     @Column(name = "description")
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "categories_id")
+    private Category category;
 
-    public Product(Long id, String title, int price) {
+
+    public Product(Long id, String title, int price, Category category) {
         this.id = id;
         this.title = title;
         this.price = price;
+        this.category = category;
     }
 }
