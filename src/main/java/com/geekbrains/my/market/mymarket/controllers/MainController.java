@@ -9,4 +9,14 @@ public class MainController {
     public String mainPage(){
         return "index";
     }
+
+    @GetMapping("/about")
+    public String aboutPage(){
+        return "about";
+    }
+
+    @GetMapping("/basket")
+    public String basketPage(){
+        return "basket";
+    }
 }

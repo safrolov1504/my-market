@@ -13,7 +13,6 @@ import java.util.Optional;
 
 @Service
 public class ProductServer {
-
     private ProductRepository productRepository;
 
     @Autowired
@@ -29,7 +28,7 @@ public class ProductServer {
         return productRepository.save(newProduct);
     }
 
-    public Optional<Product> findById(Long id) {
-        return productRepository.findById(id);
+    public Product findById(Long id) {
+        return productRepository.findById(id).get();
     }
 }

@@ -33,11 +33,16 @@ public class ProductFilter {
             spec = spec.and(ProductSpecifications.NameLike(nameLike));
             filterDefinition.append("&title_search=").append(nameLike);
         }
-        Specification<Product> categ = Specification.where(null);
+        Specification<Product> categ = null;
         for (Category category: categories) {
             if(map.containsKey(category.getName()) && !map.get(category.getName()).isEmpty()){
-                categ = categ.or(ProductSpecifications.CategoryLike(category.getId()));
-                filterDefinition.append("&").append(category.getName()).append("=on");
+                if(categ == null){
+                    categ = ProductSpecifications.CategoryLike(category.getId());
+                    filterDefinition.append("&").append(category.getName()).append("=on");
+                } else {
+                    categ = categ.or(ProductSpecifications.CategoryLike(category.getId()));
+                    filterDefinition.append("&").append(category.getName()).append("=on");
+                }
             }
         }
         spec = spec.and(categ);

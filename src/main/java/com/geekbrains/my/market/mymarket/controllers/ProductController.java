@@ -4,6 +4,8 @@ package com.geekbrains.my.market.mymarket.controllers;
 import com.geekbrains.my.market.mymarket.model.Category;
 import com.geekbrains.my.market.mymarket.model.Product;
 
+import com.geekbrains.my.market.mymarket.model.beans.Basket;
+import com.geekbrains.my.market.mymarket.model.beans.ProductInBasket;
 import com.geekbrains.my.market.mymarket.repositories.ProductSpecifications;
 import com.geekbrains.my.market.mymarket.services.CategoryService;
 import com.geekbrains.my.market.mymarket.services.ProductServer;
@@ -24,6 +26,7 @@ public class ProductController {
     ProductServer productServer;
     CategoryService categoryService;
     private Integer page;
+
 
     @Autowired
     public void setProductServer(ProductServer productServer, CategoryService categoryService) {
@@ -64,6 +67,7 @@ public class ProductController {
         model.addAttribute("product",productServer.findById(id));
         return "edit_product_form";
     }
+
 
     @PostMapping("/edit")
     public String editProduct(@ModelAttribute Product editProduct){
