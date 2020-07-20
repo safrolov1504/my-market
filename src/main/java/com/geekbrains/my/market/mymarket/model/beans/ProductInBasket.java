@@ -32,4 +32,8 @@ public class ProductInBasket {
     public Integer getCount() {
         return count;
     }
+
+    public void add(Integer count) {
+        this.count+=count;
+    }
 }

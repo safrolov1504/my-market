@@ -60,11 +60,22 @@
             <td th:text="${p.title}"></td>
             <td th:text="${p.price}"></td>
             <td th:text="${p.category.name}"></td>
-            <td><a class="btn btn-success" th:href="@{'/basket/addToBasket/' + ${p.id} + '/'+ ${filterDef}}">Добавить в корзину</a></td>
+            <td>
+                <form class="form-inline" th:accept="@{'/basket/addToBasket/'}" method="get">
+                    <div class="form-group mx-sm-3 mb-2">
+                        <input type="number" placeholder="1" th:value="${p.id}" hidden name="idInBasket">
+                        <input type="number" placeholder="1" th:value="1" name="countInBasket">
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-2">Добавить в корзину</button>
+<!--                    <button type="submit" class="btn btn-primary mb-2" th:href="@{'/basket/addToBasket/' + ${p.id} + '/'+ ${filterDef}}">Добавить в корзину</button>-->
+                </form>
+            </td>
             <td><a th:href="@{'/products/edit/' + ${p.id}}" class="btn btn-warning">Редактировать</a></td>
         </tr>
         </tbody>
     </table>
+
+<!--    <a class="btn btn-success" th:href="@{'/basket/addToBasket/' + ${p.id} + '/'+ ${filterDef}}">Добавить в корзину</a>-->
 
 
     <nav aria-label="Page navigation">

@@ -1,5 +1,6 @@
 package com.geekbrains.my.market.mymarket.model.beans;
 
+import com.geekbrains.my.market.mymarket.model.Product;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -14,11 +15,12 @@ public class Basket {
     }
 
     public void addProduct(ProductInBasket productInBasket){
+
         int check = checkProduct(productInBasket.getProduct().getId());
         if(check == -1){
             listOfProduct.add(productInBasket);
         } else {
-            listOfProduct.get(check).addOneMore();
+            listOfProduct.get(check).add(productInBasket.getCount());
         }
     }
 
@@ -52,4 +54,6 @@ public class Basket {
         }
         throw new RuntimeException("What?");
     }
+
+
 }

@@ -43,6 +43,12 @@ public class ProductController {
 
         ProductFilter productFilter = new ProductFilter(requestMap,categories);
 
+        if(requestMap.get("countInBasket") != null){
+            return "redirect:/basket/addToBasket?id=" +
+                    requestMap.get("idInBasket")+"&count=" +
+                    requestMap.get("countInBasket") + productFilter.getFilterDefinition().toString();
+        }
+
         Page<Product> products = productServer.getAll(productFilter.getSpec(), pageNumber);
 
         model.addAttribute("products",products);
