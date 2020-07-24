@@ -3,7 +3,6 @@ package com.geekbrains.my.market.mymarket.model.beans;
 import com.geekbrains.my.market.mymarket.model.Product;
 import org.springframework.stereotype.Component;
 
-@Component
 public class ProductInBasket {
 //    private Long productId;
     private Product product;

@@ -35,3 +35,51 @@ create table categories (id bigserial, name varchar(255), primary key(id));
 insert into categories
 (name) values
 ('product'), ('clothes'), ('device');
+
+drop table if exists users;
+create table users (
+  id                    bigserial,
+  name                 VARCHAR(30) not null UNIQUE,
+  password              VARCHAR(80) not null,
+  email                 VARCHAR(50) UNIQUE,
+  first_name            VARCHAR(50),
+  second_name             VARCHAR(50),
+  status                VARCHAR(50),
+  PRIMARY KEY (id)
+);
+
+drop table if exists roles;
+create table roles (
+  id                    serial,
+  name                  VARCHAR(50) not null,
+  primary key (id)
+);
+
+drop table if exists users_roles;
+create table users_roles (
+  user_id               INT NOT NULL,
+  role_id               INT NOT NULL,
+  primary key (user_id, role_id),
+  FOREIGN KEY (user_id)
+  REFERENCES users (id),
+  FOREIGN KEY (role_id)
+  REFERENCES roles (id)
+);
+
+insert into roles (name)
+values
+('ROLE_CUSTOMER'), ('ROLE_MANAGER'), ('ROLE_ADMIN');
+
+insert into users (name, password, first_name, second_name, email,status)
+values
+('111','$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i','admin','admin','admin@gmail.com','true'),
+('222','$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i','user1','user1','user1@gmail.com','true'),
+('333','$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i','user2','user2','user2@gmail.com','false');
+
+insert into users_roles (user_id, role_id)
+values
+(1, 1),
+(1, 2),
+(1, 3),
+(2,1),
+(3,1);

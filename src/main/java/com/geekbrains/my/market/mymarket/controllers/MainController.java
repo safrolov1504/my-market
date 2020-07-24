@@ -19,4 +19,10 @@ public class MainController {
     public String basketPage(){
         return "basket";
     }
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login_page";
+    }
+
 }
