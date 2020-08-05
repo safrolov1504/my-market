@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Basket</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div class="container">
+    <div th:replace="~{navigation :: navigation(Basket)}" />
+
+    <h2>Корзина покупателя</h2>
+    <span th:unless="${@basket.getListOfProduct().size() > 0}">Ваша корзина пуста</span>
+    <table class="table table-striped" th:if="${@basket.getListOfProduct().size() > 0}">
+
+        <thead>
+        <tr>
+            <td>Id</td>
+            <td>Название</td>
+            <td>Цена</td>
+            <td>Категория</td>
+            <td>Количество</td>
+            <td>Удалить</td>
+        </tr>
+        </thead>
+        <tbody>
+        <!--/*@thymesVar id="products" type="java.util.List<com.geekbrains.hw4.model.Product>"*/-->
+        <tr th:each="p : ${productsInBasket}">
+            <!--/*@thymesVar id="product" type="com.geekbrains.hw4.model.Product"*/-->
+            <td th:text="${p.product.id}"></td>
+            <td th:text="${p.product.title}"></td>
+            <td th:text="${p.product.price}"></td>
+            <td th:text="${p.product.category.name}"></td>
+
+            <td>
+                <a class="btn btn-primary" th:href="@{'/basket/decrement/' + ${p.product.id}}">-</a>
+                <span th:text="'  ' + ${p.count} + '  '"/>
+                <a class="btn btn-primary" th:href="@{'/basket/increment/' + ${p.product.id}}">+</a>
+            </td>
+
+            <td><a th:href="@{'/basket/del/' + ${p.product.id}}" class="btn btn-warning">Удалить</a></td>
+        </tr>
+        </tbody>
+    </table>
+<!--    <a class="btn btn-primary" th:href="@{'/orders/create'}">Оформить заказ</a>-->
+    <span th:if="${@basket.getListOfProduct().size() > 0}" class="badge badge-light">Итоговая цена заказа:</span>
+    <span th:if="${@basket.getListOfProduct().size() > 0}" class="badge badge-light" th:text="${totalPrice}"></span>
+    <a class="btn btn-primary" th:href="@{'/orders/create'}" th:if="${@basket.getListOfProduct().size() > 0}">Оформить заказ</a>
+</div>
+</body>
+</html>
