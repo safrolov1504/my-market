@@ -61,7 +61,7 @@
             <td th:text="${p.price}"></td>
             <td th:text="${p.category.name}"></td>
             <td>
-                <form class="form-inline">
+                <form th:action="@{/basket/addToBasket}" class="form-inline">
                     <div class="form-group mx-sm-3 mb-2">
                         <input type="number" placeholder="1" th:value="${p.id}" hidden name="idInBasket">
                         <input type="number" placeholder="1" th:value="1" name="countInBasket">

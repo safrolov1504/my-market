@@ -40,6 +40,7 @@ drop table if exists users;
 create table users (
   id                    bigserial,
   name                 VARCHAR(30) not null UNIQUE,
+  phone                 VARCHAR(30) not null UNIQUE,
   password              VARCHAR(80) not null,
   email                 VARCHAR(50) UNIQUE,
   first_name            VARCHAR(50),
@@ -70,11 +71,11 @@ insert into roles (name)
 values
 ('ROLE_CUSTOMER'), ('ROLE_MANAGER'), ('ROLE_ADMIN');
 
-insert into users (name, password, first_name, second_name, email,status)
+insert into users (name, phone, password, first_name, second_name, email,status)
 values
-('111','$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i','admin','admin','admin@gmail.com','true'),
-('222','$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i','user1','user1','user1@gmail.com','true'),
-('333','$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i','user2','user2','user2@gmail.com','false');
+('111','111','$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i','admin','admin','admin@gmail.com','true'),
+('222','222','$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i','user1','user1','user1@gmail.com','true'),
+('333','333','$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i','user2','user2','user2@gmail.com','false');
 
 insert into users_roles (user_id, role_id)
 values
@@ -83,3 +84,10 @@ values
 (1, 3),
 (2,1),
 (3,1);
+
+
+drop table if exists orders cascade;
+create table orders (id bigserial, user_id bigint not null, price numeric(8, 2) not null, address varchar (255) not null, phone_number varchar(30) not null, primary key(id), constraint fk_user_id foreign key (user_id) references users (id));
+
+drop table if exists orders_items cascade;
+create table orders_items (id bigserial, order_id bigint not null, product_id bigint not null, quantity int, price numeric(8, 2), primary key(id), constraint fk_prod_id foreign key (product_id) references products (id), constraint fk_order_id foreign key (order_id) references orders (id));

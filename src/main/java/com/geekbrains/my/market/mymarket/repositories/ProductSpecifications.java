@@ -11,7 +11,9 @@ import javax.persistence.criteria.Root;
 
 public class ProductSpecifications {
     public static Specification<Product> PriceGEThan(double minPrice) {
-        return (Specification<Product>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("price"), minPrice);
+        return (Specification<Product>) (root, criteriaQuery, criteriaBuilder) -> {
+            return criteriaBuilder.greaterThanOrEqualTo(root.get("price"), minPrice);
+        };
     }
 
     public static Specification<Product> PriceLEThan(double maxPrice) {

@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "products")
@@ -20,7 +21,7 @@ public class Product {
 
 
     @Column(name = "price")
-    private double price;
+    private BigDecimal price;
 
     @Column(name = "description")
     private String description;
@@ -30,7 +31,7 @@ public class Product {
     private Category category;
 
 
-    public Product(Long id, String title, int price, Category category) {
+    public Product(Long id, String title, BigDecimal price, Category category) {
         this.id = id;
         this.title = title;
         this.price = price;

@@ -6,6 +6,7 @@ import com.geekbrains.my.market.mymarket.model.beans.ProductInBasket;
 import com.geekbrains.my.market.mymarket.services.CategoryService;
 import com.geekbrains.my.market.mymarket.services.ProductServer;
 import com.geekbrains.my.market.mymarket.utils.ProductFilter;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,12 +15,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Map;
 
 @Controller
 @RequestMapping("/basket")
+@AllArgsConstructor
 public class BasketController {
     private Basket basket;
     ProductServer productServer;
@@ -35,31 +38,33 @@ public class BasketController {
     public String mainPage(Model model){
         if (basket != null){
             model.addAttribute("productsInBasket", basket.getListOfProduct());
+            model.addAttribute("totalPrice", basket.getPrice());
         }
         return "basket";
     }
 
-//    @GetMapping("/addToBasket/{id}")
-//    public String addToBasket(@PathVariable Long id){
-//        addToBasketIn(id);
-//        return "redirect:/products";
-//    }
-//
-//    @GetMapping("/addToBasket/{id}/{filter}")
-//    public String addToBasket(@PathVariable Long id,
-//                              @PathVariable(required = false
-//                              ) String filter){
-//        addToBasketIn(id);
-//        System.out.println(filter);
-//        return "redirect:/products?p=1"+filter;
-//    }
-
     @GetMapping("/addToBasket")
-    public String addToBasket(@RequestParam Map<String,String> requestMap){
-        addToBasketIn(Long.parseLong(requestMap.get("id")), Integer.parseInt(requestMap.get("count")));
-        ProductFilter productFilter = new ProductFilter(requestMap,null);
-        Integer pageNumber = Integer.parseInt(requestMap.getOrDefault("p", "1"));
-        return "redirect:/products?p="+pageNumber+productFilter.getFilterDefinition().toString();
+    public void addToBasket(@RequestParam Map<String,String> requestMap,
+                              HttpServletResponse response, HttpServletRequest request) throws IOException {
+        Long id = Long.parseLong(requestMap.get("idInBasket"));
+        Integer count = Integer.parseInt(requestMap.get("countInBasket"));
+        addToBasketIn(id, count);
+
+        response.sendRedirect(request.getHeader("referer"));
+    }
+
+    @GetMapping("/increment/{productId}")
+    public void incrementToBasket(HttpServletResponse response, HttpServletRequest request,
+                                  @PathVariable String productId) throws IOException {
+        basket.incrementBasket(Integer.parseInt(productId));
+        response.sendRedirect(request.getHeader("referer"));
+    }
+
+    @GetMapping("/decrement/{productId}")
+    public void decrementToBasket(HttpServletResponse response, HttpServletRequest request,
+                                  @PathVariable String productId) throws IOException {
+        basket.decrementBasket(Integer.parseInt(productId));
+        response.sendRedirect(request.getHeader("referer"));
     }
 
     private void addToBasketIn(Long id, int count){

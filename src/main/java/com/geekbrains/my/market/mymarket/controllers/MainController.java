@@ -1,5 +1,6 @@
 package com.geekbrains.my.market.mymarket.controllers;
 
+import com.geekbrains.my.market.mymarket.model.Product;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 

@@ -17,6 +17,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -43,11 +46,11 @@ public class ProductController {
 
         ProductFilter productFilter = new ProductFilter(requestMap,categories);
 
-        if(requestMap.get("countInBasket") != null){
-            return "redirect:/basket/addToBasket?id=" +
-                    requestMap.get("idInBasket")+"&count=" +
-                    requestMap.get("countInBasket") + productFilter.getFilterDefinition().toString();
-        }
+//        if(requestMap.get("countInBasket") != null){
+//            return "redirect:/basket/addToBasket?id=" +
+//                    requestMap.get("idInBasket")+"&count=" +
+//                    requestMap.get("countInBasket") + productFilter.getFilterDefinition().toString();
+//        }
 
         Page<Product> products = productServer.getAll(productFilter.getSpec(), pageNumber);
 
@@ -64,9 +67,12 @@ public class ProductController {
 
     @PostMapping("/add")
     public String addNewProduct(@ModelAttribute Product newProduct){
+        System.out.println(newProduct.toString());
         productServer.saveOrUpdate(newProduct);
+        System.out.println(newProduct.toString());
         return "redirect:/products";
     }
+
 
     @GetMapping("/edit/{id}")
     public String showEditProduct(@PathVariable Long id, Model model){

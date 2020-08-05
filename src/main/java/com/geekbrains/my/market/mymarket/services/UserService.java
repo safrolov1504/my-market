@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -62,5 +63,9 @@ public class UserService implements UserDetailsService {
         User newUser = userRepository.findById(idLong).get();
         newUser.setStatus(status);
         userRepository.save(newUser);
+    }
+
+    public User findByPhone(String phone) {
+        return userRepository.findOneByPhone(phone).get();
     }
 }
