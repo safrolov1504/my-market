@@ -2,8 +2,11 @@ package com.geekbrains.my.market.mymarket.restControllers;
 
 import com.geekbrains.my.market.mymarket.exceptions.ProductNotFoundException;
 import com.geekbrains.my.market.mymarket.model.Product;
+import com.geekbrains.my.market.mymarket.model.User;
 import com.geekbrains.my.market.mymarket.model.dtos.ProductDto;
+import com.geekbrains.my.market.mymarket.model.dtos.SystemUser;
 import com.geekbrains.my.market.mymarket.services.ProductServer;
+import com.geekbrains.my.market.mymarket.services.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -21,10 +24,12 @@ import java.util.List;
 public class RestProductController {
     private ProductServer productsService;
 
+
     @Autowired
     public RestProductController(ProductServer productsService) {
         this.productsService = productsService;
     }
+
 
 
     @GetMapping("/dto")
@@ -47,6 +52,7 @@ public class RestProductController {
         }
         return new ResponseEntity<>(productsService.findById(id), HttpStatus.OK);
     }
+
 
     @DeleteMapping
     @ApiOperation("Removes all products")

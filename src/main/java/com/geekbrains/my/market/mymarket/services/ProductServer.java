@@ -38,6 +38,7 @@ public class ProductServer {
         return productRepository.findAllBy();
     }
 
+
     public List<Product> findAll() {
         return productRepository.findAll();
     }
