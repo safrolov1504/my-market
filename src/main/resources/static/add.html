@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="demoApp" ng-controller="demoCtrl">
+<html ng-app="productApp" ng-controller="productCtrl">
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <!--	<script src="doc.js"></script>-->
@@ -11,13 +11,13 @@
 
     <h1>Add a new item</h1>
 
-    <form name="addDemoForm" novalidate ng-submit="submitDemo()">
+    <form name="addProductForm" novalidate ng-submit="submitProduct()">
         ID:
-        <input type="text" ng-model="ademo.id">
+        <input type="text" ng-model="product.id">
         Title:
-        <input type="text" ng-model="ademo.title">
-        Value:
-        <input type="text" ng-model="ademo.value">
+        <input type="text" ng-model="product.title">
+        Price:
+        <input type="text" ng-model="product.price">
         <button type="submit">submit</button>
     </form>
 
@@ -26,10 +26,10 @@
 </body>
 
 <script>
-    var app = angular.module('demoApp', []);
-    app.controller('demoCtrl', function($scope, $http) {
-        $scope.submitDemo = function() {
-            $http.post('http://localhost:8199/tm/api/v1/demo', $scope.ademo)
+    var app = angular.module('productApp', []);
+    app.controller('productCtrl', function($scope, $http) {
+        $scope.submitProduct = function() {
+            $http.post('http://localhost:8189/market/api/v1/products ', $scope.product)
                 .then(function(response) {
                     console.log(123);
                     $scope.Demos.push(response.data);

@@ -31,7 +31,7 @@
 		var app = angular.module('demoApp', []);
 		app.controller('demoCtrl', function($scope, $http) {
 		  fillTable = function() {
-              $http.get("http://localhost:8189/market/api/v1/products/dto")
+              $http.get("http://localhost:8189/market/api/v1/products")
               .then(function(response) {
                 $scope.Products = response.data;
 

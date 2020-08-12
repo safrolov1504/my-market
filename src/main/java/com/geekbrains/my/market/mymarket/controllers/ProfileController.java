@@ -25,7 +25,7 @@ public class ProfileController {
     public String profilePage(Principal principal, Model model){
         String name = principal.getName();
         System.out.println(name);
-        User user = userService.findUserByName(name);
+        User user = userService.findUserByName(name).get();
         System.out.println(user.toString());
         model.addAttribute("user",user);
         return "profile";

@@ -2,6 +2,7 @@ package com.geekbrains.my.market.mymarket.services;
 
 import com.geekbrains.my.market.mymarket.model.Role;
 import com.geekbrains.my.market.mymarket.model.User;
+import com.geekbrains.my.market.mymarket.model.dtos.SystemUser;
 import com.geekbrains.my.market.mymarket.repositories.RoleRepository;
 import com.geekbrains.my.market.mymarket.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,23 +12,27 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
-    private RoleRepository roleRepository;
+    private RolesService rolesService;
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public void setRoleRepository(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Autowired
+    public void setRolesService(RolesService rolesService) {
+        this.rolesService = rolesService;
     }
 
     @Autowired
@@ -50,8 +55,8 @@ public class UserService implements UserDetailsService {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
-    public User findUserByName(String user){
-        return userRepository.findOneByName(user).get();
+    public Optional<User> findUserByName(String user){
+        return userRepository.findOneByName(user);
     }
 
     public List<User> findAll(){
@@ -67,5 +72,22 @@ public class UserService implements UserDetailsService {
 
     public User findByPhone(String phone) {
         return userRepository.findOneByPhone(phone).get();
+    }
+
+    @Transactional
+    public User save(SystemUser systemUser) {
+        User user = new User();
+        findUserByName(systemUser.getName()).ifPresent((u) -> {
+            throw new RuntimeException("User with phone " + systemUser.getName() + " is already exist");
+        });
+        user.setName(systemUser.getName());
+        user.setPassword(passwordEncoder.encode(systemUser.getPassword()));
+        user.setFirstName(systemUser.getFirstName());
+        user.setSecondName(systemUser.getLastName());
+        user.setPhone(systemUser.getPhone());
+        user.setEmail(systemUser.getEmail());
+        user.setRoles(Arrays.asList(rolesService.findByName("ROLE_CUSTOMER")));
+        user.setStatus("true");
+        return userRepository.save(user);
     }
 }

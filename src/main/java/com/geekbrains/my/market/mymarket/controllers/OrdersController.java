@@ -22,7 +22,7 @@ public class OrdersController {
 
     @GetMapping("/create")
     public String createOrder(Principal principal, Model model) {
-        User user = usersService.findUserByName(principal.getName());
+        User user = usersService.findUserByName(principal.getName()).get();
         model.addAttribute("user", user);
         model.addAttribute("basket",basket);
         return "order_info";
