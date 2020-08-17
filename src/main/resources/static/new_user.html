@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html ng-app="appShop" ng-controller="userNewCtrl" >
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>Регистрация</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!--    <link rel="icon" type="image/png" th:href="@{/favicon.ico}"/>-->
+    <script src="logic.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+		.error {color:red}
+    </style>
+</head>
+
+<body>
+
+<div>
+    <div id="loginbox" style="margin-top: 50px;"
+         class="mainbox col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">
+
+        <div class="panel panel-primary">
+
+            <div class="panel-heading">
+                <div class="panel-title">Регистрация</div>
+            </div>
+
+            <div style="padding-top: 30px" class="panel-body">
+                <div class="form-group">
+                    <div class="col-xs-15">
+                        <div ng-repeat="e in usersRespons.errors">
+                            {{e.field}}: {{e.defaultMessage}}
+                        </div>
+
+                    </div>
+                </div>
+                <form name="addUserForm" novalidate ng-submit="submitNewUser()" class="form-horizontal">
+<!--                    <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" />-->
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input ng-model="systemUser.name" placeholder="name (*)" class="form-control"/>
+                    </div>
+
+<!--                    <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" />-->
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input ng-model="systemUser.password" type="password" placeholder="password (*)" class="form-control"/>
+                    </div>
+
+<!--                    <div class="error" th:if="${#fields.hasErrors('matchingPassword')}" th:errors="*{matchingPassword}" />-->
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input ng-model="systemUser.matchingPassword" type="password" placeholder="confirm password (*)" class="form-control"/>
+                    </div>
+
+<!--                    <div class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" />-->
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input ng-model="systemUser.phone" placeholder="phone (*)" class="form-control"/>
+                    </div>
+
+<!--                    <div class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" />-->
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input ng-model="systemUser.firstName" placeholder="first name (*)" class="form-control"/>
+                    </div>
+
+<!--                    <div class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" />-->
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input ng-model="systemUser.lastName" placeholder="last name (*)" class="form-control"/>
+                    </div>
+
+<!--                    <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" />-->
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input ng-model="systemUser.email" placeholder="email (*)" class="form-control"/>
+                    </div>
+
+                    <div style="margin-top: 10px" class="form-group">
+                        <div class="col-sm-6 controls">
+                            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<!--<script>-->
+<!--    var app = angular.module('userNewApp', []);-->
+<!--    app.controller('userNewCtrl', function($scope, $http) {-->
+<!--        $scope.submitNewUser = function() {-->
+<!--            $http.post('http://localhost:8189/market/api/v1/users/new_user', $scope.systemUser)-->
+<!--                .then(function(response) {-->
+<!--                    console.log(123);-->
+<!--                    $scope.Demos.push(response.data);-->
+<!--                });-->
+<!--        };-->
+<!--    });-->
+<!--</script>-->
+
+</html>

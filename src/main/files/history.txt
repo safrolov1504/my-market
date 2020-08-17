@@ -1,0 +1,5 @@
+1597693951667. Что-то делают с продуктом: <200 OK OK,Product{id=3, title='Apples', price=8},[]>
+Mon Aug 17 22:59:23 MSK 2020: Найден продукт:<302 FOUND Found,Product{id=3, title='Apples', price=8},[]>
+Mon Aug 17 23:05:06 MSK 2020: Найден продукт:<200 OK OK,Product{id=2, title='Milk', price=80},[]>
+Mon Aug 17 23:05:28 MSK 2020: Изменен продукт:<202 ACCEPTED Accepted,Product{id=2, title='Milk33', price=80},[]>
+Mon Aug 17 23:05:43 MSK 2020: Создан продукт:<201 CREATED Created,Product{id=28, title='333', price=333},[]>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html ng-app="appShop" ng-controller="addController">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="logic.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <h1>Add a new item</h1>
+
+    <form name="addProductForm" novalidate ng-submit="submitProduct()">
+        ID:
+        <input type="text" ng-model="product.id">
+        Title:
+        <input type="text" ng-model="product.title">
+        Price:
+        <input type="text" ng-model="product.price">
+        <button type="submit">submit</button>
+    </form>
+</body>
+
+<!--<script>-->
+<!--    var app = angular.module('productApp', []);-->
+<!--    app.controller('productCtrl', function($scope, $http) {-->
+<!--        $scope.submitProduct = function() {-->
+<!--            $http.post('http://localhost:8189/market/api/v1/products ', $scope.product)-->
+<!--                .then(function(response) {-->
+<!--                    console.log(123);-->
+<!--                    $scope.Demos.push(response.data);-->
+<!--                });-->
+<!--        };-->
+<!--    });-->
+<!--</script>-->
+
+</html>
