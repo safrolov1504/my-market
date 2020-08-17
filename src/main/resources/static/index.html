@@ -1,0 +1,28 @@
+<!doctype html>
+
+<html ng-app="appShop">
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-route.min.js"></script>
+    <script src="logic.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h1>July Market Application</h1>
+
+    <a class="btn btn-outline-warning" href="#!/">Главная</a>
+    <a class="btn btn-outline-warning" href="#!/product">Товары</a>
+    <a class="btn btn-outline-warning" href="#!/add">Создать товар</a>
+    <a class="btn btn-outline-warning" href="#!/new_user">Создать нового пользователя</a>
+
+    <ng-view></ng-view>
+</div>
+</body>
+</html>

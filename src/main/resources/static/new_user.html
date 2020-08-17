@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="userNewApp" ng-controller="userNewCtrl" >
+<html ng-app="appShop" ng-controller="userNewCtrl" >
 <html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 <!--    <link rel="icon" type="image/png" th:href="@{/favicon.ico}"/>-->
+    <script src="logic.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -30,18 +31,15 @@
             </div>
 
             <div style="padding-top: 30px" class="panel-body">
+                <div class="form-group">
+                    <div class="col-xs-15">
+                        <div ng-repeat="e in usersRespons.errors">
+                            {{e.field}}: {{e.defaultMessage}}
+                        </div>
+
+                    </div>
+                </div>
                 <form name="addUserForm" novalidate ng-submit="submitNewUser()" class="form-horizontal">
-
-<!--                    <div class="form-group">-->
-<!--                        <div class="col-xs-15">-->
-<!--                            <div th:if="${registrationError != null}">-->
-<!--                                <div class="alert alert-danger col-xs-offset-1 col-xs-10">-->
-<!--                                    ${registrationError}-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-
 <!--                    <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" />-->
                     <div style="margin-bottom: 25px" class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -96,17 +94,17 @@
 </div>
 </body>
 
-<script>
-    var app = angular.module('userNewApp', []);
-    app.controller('userNewCtrl', function($scope, $http) {
-        $scope.submitNewUser = function() {
-            $http.post('http://localhost:8189/market/api/v1/users/new_user', $scope.systemUser)
-                .then(function(response) {
-                    console.log(123);
-                    $scope.Demos.push(response.data);
-                });
-        };
-    });
-</script>
+<!--<script>-->
+<!--    var app = angular.module('userNewApp', []);-->
+<!--    app.controller('userNewCtrl', function($scope, $http) {-->
+<!--        $scope.submitNewUser = function() {-->
+<!--            $http.post('http://localhost:8189/market/api/v1/users/new_user', $scope.systemUser)-->
+<!--                .then(function(response) {-->
+<!--                    console.log(123);-->
+<!--                    $scope.Demos.push(response.data);-->
+<!--                });-->
+<!--        };-->
+<!--    });-->
+<!--</script>-->
 
 </html>
