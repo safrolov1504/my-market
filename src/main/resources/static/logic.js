@@ -1,4 +1,4 @@
-var app = angular.module('appShop', ['ngRoute']);
+var app = angular.module('appShop', ['ngRoute', 'ngStorage']);
 var contextPath = 'http://localhost:8189/market'
 
 app.config(function ($routeProvider) {
@@ -24,7 +24,29 @@ app.config(function ($routeProvider) {
         })
 });
 
-app.controller('productCtrl', function($scope, $http) {
+app.controller('mainController', function ($scope, $http, $localStorage) {
+    $scope.tryToAuth = function () {
+        $http.post(contextPath + '/auth', $scope.user)
+            .then(function (response) {
+                if (response.data.token) {
+                    $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
+                    $localStorage.currentUser = { username: $scope.user.username, token: response.data.token };
+                }
+            });
+    };
+
+    $scope.tryToLogout = function () {
+        delete $localStorage.currentUser;
+        $http.defaults.headers.common.Authorization = '';
+    };
+});
+
+app.controller('productCtrl', function($scope, $http, $localStorage) {
+
+    if ($localStorage.currentUser) {
+        $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
+    }
+
     fillTable = function() {
         $http.get(contextPath + "" + '/api/v1/products')
             .then(function(response) {
@@ -36,7 +58,11 @@ app.controller('productCtrl', function($scope, $http) {
     fillTable();
 });
 
-app.controller('addController', function($scope, $http) {
+app.controller('addController', function($scope, $http, $localStorage) {
+    if ($localStorage.currentUser) {
+        $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
+    }
+
     $scope.submitProduct = function() {
         $http.post(contextPath + '/api/v1/products', $scope.product)
             .then(function(response) {
@@ -46,8 +72,12 @@ app.controller('addController', function($scope, $http) {
     };
 });
 
-app.controller('productEditCtrl', function($scope, $http, $routeParams) {
+app.controller('productEditCtrl', function($scope, $http, $routeParams, $localStorage) {
     const advertsPath = contextPath + '/api/v1/products';
+
+    if ($localStorage.currentUser) {
+        $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
+    }
 
     fillForm = function() {
         $http.get(advertsPath + '/' + $routeParams.id)

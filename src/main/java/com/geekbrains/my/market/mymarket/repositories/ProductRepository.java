@@ -14,4 +14,6 @@ import java.util.Optional;
 public interface ProductRepository extends JpaRepository<Product,Long>, JpaSpecificationExecutor<Product> {
     List<ProductDto> findAllBy();
 
+
+    Product findByTitle(String name);
 }
